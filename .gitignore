@@ -106,3 +106,4 @@ dist
 # MongoDB connection file
 config.env
 server/globalConfig.json
+.env
