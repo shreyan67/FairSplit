@@ -12,7 +12,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000", // for local dev
-      "https://your-frontend-on-render.com", // add your deployed frontend URL here
+      "https://fairsplitapp-76vz.onrender.com/", // add your deployed frontend URL here
     ],
     credentials: true, // if you use cookies or auth
   }),
