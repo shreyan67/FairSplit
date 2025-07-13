@@ -12,19 +12,21 @@ const app = express();
 // ✅ CORS Middleware — Apply BEFORE routes
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://fairsplitapp-76vz.onrender.com"
+  "https://fairsplitapp-76vz.onrender.com",
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  }),
+);
 
 // ✅ Handle preflight requests
 app.options("*", cors());
@@ -41,9 +43,9 @@ const password = process.env.PASSWORD || "changePasswordHere";
 const devUrl = `mongodb+srv://admin:${password}@fairsplit.fjvgxmg.mongodb.net/?retryWrites=true&w=majority`;
 const mongoDB = process.env.MONGODB_URI || devUrl;
 
-mongoose.connect(mongoDB).catch((error) =>
-  console.error("MongoDB connection error:", error)
-);
+mongoose
+  .connect(mongoDB)
+  .catch((error) => console.error("MongoDB connection error:", error));
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
