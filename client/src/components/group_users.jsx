@@ -22,7 +22,7 @@ function GroupUsers(props) {
   let userSelectRef = createRef();
 
   // Server URL
-  const apiUrl = "http://localhost:3001";
+  const apiUrl = "https://fairsplit-c5zk.onrender.com";
 
   // Returns styles to grey out button
   function disabledBtnStyles() {

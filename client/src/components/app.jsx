@@ -7,7 +7,7 @@ import GroupUsers from "./group_users";
 import UserSwitching from "./user_switching";
 
 function App() {
-  const apiUrl = "http://localhost:3001";
+  const apiUrl = "https://fairsplit-c5zk.onrender.com";
 <><h1>hi</h1></>
   // Use this as global group
   let [group, setGroup] = useState({
