@@ -2,45 +2,55 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require("cors");
+
 const usersRouter = require("./routes/users.js");
 const expensesRouter = require("./routes/expenses.js");
 const debtsRouter = require("./routes/debts.js");
 
 const app = express();
-app.use(express.json());
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000", // for local dev
-      "https://fairsplitapp-76vz.onrender.com/", // add your deployed frontend URL here
-    ],
-    credentials: true, // if you use cookies or auth
-  }),
-);
 
+// ✅ CORS Middleware — Apply BEFORE routes
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://fairsplitapp-76vz.onrender.com"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+
+// ✅ Handle preflight requests
+app.options("*", cors());
+
+app.use(express.json());
+
+// ✅ Routes
 app.use(usersRouter);
 app.use(expensesRouter);
 app.use(debtsRouter);
 
-// !IMPORTANT: Create .env file with password
+// ✅ MongoDB connection
 const password = process.env.PASSWORD || "changePasswordHere";
-let devUrl = `mongodb+srv://admin:${password}@fairsplit.fjvgxmg.mongodb.net/?retryWrites=true&w=majority`;
-var mongoDB = process.env.MONGODB_URI || devUrl;
-// Set up the Mongoose connection.
-mongoose
-  .connect(mongoDB)
-  .catch((error) => console.error("MongoDB connection error:", error));
-let db = mongoose.connection;
+const devUrl = `mongodb+srv://admin:${password}@fairsplit.fjvgxmg.mongodb.net/?retryWrites=true&w=majority`;
+const mongoDB = process.env.MONGODB_URI || devUrl;
 
-// Bind the connection to an error event to get notification of connection
-// errors.
+mongoose.connect(mongoDB).catch((error) =>
+  console.error("MongoDB connection error:", error)
+);
+
+const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
-// Displays a success message when the connection is successfully made.
-db.once("open", function () {
+db.once("open", () => {
   console.log("Connected successfully.");
 });
 
-// Set up the port to listen on.
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Server is running at port ${port}.`);
