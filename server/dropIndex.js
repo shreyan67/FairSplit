@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // Replace 'test' with your database name if different
-const uri = "mongodb://localhost:27017/Cluster0";
+const uri = "mongodb://localhost:27017/test";
 
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })

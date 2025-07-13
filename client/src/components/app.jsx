@@ -8,7 +8,6 @@ import UserSwitching from "./user_switching";
 
 function App() {
   const apiUrl = "https://fairsplit-c5zk.onrender.com";
-<><h1>hi</h1></>
   // Use this as global group
   let [group, setGroup] = useState({
     name: "Expenses",
