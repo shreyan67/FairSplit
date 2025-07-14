@@ -17,7 +17,7 @@ function GroupExpenses(props) {
   // Add expense data to db
   async function addExpense(expense) {
     // Call route to add expense to db
-    let validExpense = await fetch("http://localhost:3000/expenses", {
+    let validExpense = await fetch("https://fairsplit-c5zk.onrender.com/expenses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
