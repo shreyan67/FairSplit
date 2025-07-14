@@ -6,6 +6,9 @@ const debtsRouter = require("../routes/debts.js");
 const debtModel = require("../models/debt");
 
 describe("Test for debt routes", () => {
+  beforeEach(async () => {
+  await debtModel.deleteMany({});
+});
   const app = express();
   app.use(express.json());
   app.use(debtsRouter);
