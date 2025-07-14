@@ -1,14 +1,14 @@
 const express = require("express");
+const router = express.Router();
 const expenseController = require("../controllers/expense_controller");
-const app = express();
 
 // Get all expenses in the group.
-app.get("/expenses", expenseController.getExpenses);
+router.get("/expenses", expenseController.getExpenses);
 
 // Add an expense.
-app.post("/expenses", expenseController.addExpense);
+router.post("/expenses", expenseController.addExpense);
 
 // Temporary route for adding settlement as expense.
-app.post("/expenses/settlement", expenseController.addSettlement);
+router.post("/expenses/settlement", expenseController.addSettlement);
 
-module.exports = app;
+module.exports = router;
